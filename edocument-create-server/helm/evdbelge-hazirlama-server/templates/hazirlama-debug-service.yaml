@@ -1,0 +1,16 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: {{ .Values.__IMAGE_NAME__ }}
+    debug: var
+  name: {{ .Values.__APP_NAME__ }}-debug-service
+spec:
+  type: NodePort
+  ports:
+    - name: "debug-port"
+      port: 8000
+      targetPort: 8000
+      nodePort: 30074
+  selector:
+    app: {{ .Values.__IMAGE_NAME__ }}

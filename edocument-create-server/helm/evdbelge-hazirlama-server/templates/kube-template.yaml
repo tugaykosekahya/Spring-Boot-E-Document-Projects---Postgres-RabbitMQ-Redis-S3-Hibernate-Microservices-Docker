@@ -1,0 +1,94 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Values.__IMAGE_NAME__ }}
+  name: {{ .Values.__IMAGE_NAME__ }}-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: {{ .Values.__IMAGE_NAME__ }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.__IMAGE_NAME__ }}
+spec:
+  replicas: {{ .Values.__REPLICA_COUNT__ }}
+  selector:
+    matchLabels:
+      app: {{ .Values.__IMAGE_NAME__ }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.__IMAGE_NAME__ }}
+        tier: Backend
+        debug: var  
+        labelCache: redis
+    spec:
+      hostAliases:
+      - ip: {{ .Values.__POSTGRES_SVC__ }}
+        hostnames:
+        - postgres-service
+      - ip: {{ .Values.__YEVDO_SVC__ }}
+        hostnames:
+        - yevdoro-service
+        - rabbit-service
+      containers:
+        - name: {{ .Values.__IMAGE_NAME__ }}
+          image: {{ .Values.__NEXUS_NAME__ }}:10441/{{ .Values.__IMAGE_NAME__ }}:{{ .Chart.AppVersion }}
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1250Mi"
+            limits:
+              cpu: "2000m"  
+              memory: "2Gi"  
+          ports:
+            - containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.__SVR_CONTEXT_PATH__ }}/monitorRequest
+              port: 8080
+            initialDelaySeconds: 80
+            periodSeconds: 70
+            failureThreshold: 5
+            timeoutSeconds: 20
+          readinessProbe:
+            httpGet:
+              path: {{ .Values.__SVR_CONTEXT_PATH__ }}/actuator/health/readiness
+              port: 8080
+            initialDelaySeconds: 50
+            periodSeconds: 30
+            timeoutSeconds: 5
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.__APP_NAME__ }}-server-env
+            - configMapRef:
+                name: {{ .Values.__APP_NAME__ }}-application-config
+            - secretRef:
+                name: {{ .Values.__APP_NAME__ }}-application-secret
+          volumeMounts:
+            - name: tz-istanbul
+              mountPath: /etc/localtime
+            - name: nfslog-volume
+              mountPath: /home/gib/{{ .Values.__IMAGE_NAME__ }}/logs 
+      volumes:
+        - name: tz-istanbul
+          hostPath:
+            path: /usr/share/zoneinfo/Europe/Istanbul
+        - name: nfslog-volume
+          hostPath:
+            path: /nfslog/{{ .Values.__NFS_PATH__ }}
+            type: Directory
+      imagePullSecrets:
+        - name: nexus-secret

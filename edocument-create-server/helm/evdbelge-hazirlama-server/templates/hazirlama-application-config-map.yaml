@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.__APP_NAME__ }}-application-config
+  namespace: {{ .Values.__KUBE_CTX__ }}
+  labels:
+    app: {{ .Values.__IMAGE_NAME__ }}
+data:
+  HAZIRLAMA_SERVER_PORT: {{ quote .Values.__HAZIRLAMA_SERVER_PORT__ }}
+  YEVDORO_SERVICE_PORT: {{ quote .Values.__YEVDORO_SERVER_PORT__ }}
+  SVR_CONTEXT_PATH: {{ quote .Values.__SVR_CONTEXT_PATH__ }}
+  APP_NAME: {{ quote .Values.__APP_NAME__ }}
+  LOG_PATH: {{ quote .Values.__LOG_PATH__ }}
+  ENVIRONMENT: {{ quote .Values.__ENVIRONMENT__ }}
+  SERVICE_URL: {{ .Values.__SERVICE_URL__ }}
+  ELASTIC_APM_APP_PACKAGE: {{ quote .Values.__ELASTIC_APM_APP_PACKAGE__ }}
+  ELASTIC_APM_SERVICE_URL: {{ .Values.__ELASTIC_APM_SERVICE_URL__ }}
+  ELASTIC_APM_VERIFY_SERVER_CERT: {{ quote .Values.__ELASTIC_APM_VERIFY_SERVER_CERT__ }}
+  ELASTIC_APM_ENABLE: {{ quote .Values.__ELASTIC_APM_ENABLE__ }}
+  REDIS_SERVICE_HOST: {{ .Values.__REDIS_SERVICE_HOST__ }}
+  REDIS_SERVICE_PORT: {{ quote .Values.__REDIS_SERVICE_PORT__ }}
+  POSTGRES_EVDBELGE_DATABASE_URL: {{ .Values.__POSTGRES_EVDBELGE_DATABASE_URL__ }}
+  POSTGRES_EVDBELGE_DATABASE_MAX_POOL_SIZE: {{ quote .Values.__POSTGRES_EVDBELGE_DATABASE_MAX_POOL_SIZE__ }}
+  POSTGRES_EVDBELGE_DATABASE_MIN_IDLE: {{ quote .Values.__POSTGRES_EVDBELGE_DATABASE_MIN_IDLE__ }}
+  POSTGRES_DATABASE_SHOW_SQL: {{ quote .Values.__POSTGRES_DATABASE_SHOW_SQL__ }}
+  LOG_HIBERNATE_SQL: {{ quote .Values.__LOG_HIBERNATE_SQL__ }}
+  EVDBELGE_RBT_SERVICE_PORT: {{ quote .Values.__EVDBELGE_RBT_SERVICE_PORT__ }}
+  EVDBELGE_RBT_EXCHANGE: {{ quote .Values.__EVDBELGE_RBT_EXCHANGE__ }}
+  EVDBELGE_RBT_QUEUE: {{ quote .Values.__EVDBELGE_RBT_QUEUE__ }}
+  EVDBELGE_RBT_ROUTINGKEY: {{ quote .Values.__EVDBELGE_RBT_ROUTINGKEY__ }}
+  RABBITMQ_API_QUEUE_URL: {{ .Values.__RABBITMQ_API_QUEUE_URL__ }}
+  

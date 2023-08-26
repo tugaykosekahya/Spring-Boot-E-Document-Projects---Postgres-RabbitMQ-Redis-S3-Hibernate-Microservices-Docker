@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: evdbelge-hazirlama
+spec:
+  destination:
+    name: ''
+    namespace: evdbelge-test
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: ''
+    repoURL: 'http://nexustest.gelbim.gov.tr:2081/repository/gib-helm/'
+    targetRevision: 0.0.1-SNAPSHOT
+    chart: evdbelge-hazirlama-server
+    helm:
+      valueFiles:
+        - test-values.yaml
+  project: evdbelge
+  ignoreDifferences:
+    - group: apps
+      kind: Deployment
+      jsonPointers:
+        - /spec/replicas
+  syncPolicy:
+    syncOptions:
+      - RespectIgnoreDifferences=true
+      - FailOnSharedResource=true
+    automated:
+      prune: true
+      selfHeal: true
