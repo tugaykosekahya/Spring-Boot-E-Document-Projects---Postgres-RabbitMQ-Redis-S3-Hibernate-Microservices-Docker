@@ -5,7 +5,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'tr.gov.gib.evdbelge'
+group = '--'
 sourceCompatibility = '17'
 
 configurations {
@@ -52,8 +52,8 @@ task generateJavaClasses {
 
         ant.xjc(
                 destdir: '${jaxbTargetDir}',
-                package: 'tr.gov.gib.evdbelge.evdbelgeteblig.client.codes',
-                schema: 'src/main/resources/wsdl/etebligat.wsdl',
+                package: '--.client.codes',
+                schema: 'src/main/resources/wsdl/--.wsdl',
                 language: 'WSDL'
         )
     }
@@ -83,18 +83,7 @@ dependencies {
 
 
     implementation 'tr.com.cs:S3Access:1.0.7'
-
-    implementation 'org.apache.commons:commons-text:1.9'
-
-    implementation 'tr.gov.gib.tahsilat:ths-base-controller:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-base-object:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-base-dao:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-base-service:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-exception:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-validator:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-external:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-utils:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-converter:1.1.1'
+    implementation 'org.apache.commons:commons-text:1.9'    
     implementation 'tr.gov.gib.tahsilat:ths-logging:1.1.1'
 
     implementation 'tr.gov.gib.gibos:gibosKubernetesServiceRemoteCall:0.0.8'
