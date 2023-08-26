@@ -23,7 +23,7 @@ dis servisler icin request response objeleri ve servis bulunur.
 object -->
 request response objeleri bulunur.
 
-service -->
+service --
 servis bulunur.
 
 dao -->
@@ -32,7 +32,7 @@ jpa repolar ve jpa queryler bulunur.
 mapper -->
 entityleri (persistence object leri) dto ya cevirmek icin veya tam tersi.	
 -
-örn: kubectl apply -f hazirlama-application-config-map.yaml --context=evdbelge-test
+örn: kubectl apply -f application-config-map.yaml --context=test
 
 config dosyaları deploy projesi altında güncel olmalıdır ve sistem ekibine de güncel halleri ayrıca gönderilir.
 
