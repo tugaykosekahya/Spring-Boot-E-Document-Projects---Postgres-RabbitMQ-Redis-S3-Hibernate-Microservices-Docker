@@ -49,7 +49,7 @@ Dependency leri içinde oluşması isteniyorsa:
 jar {
 
     manifest {
-        attributes "Main-Class": "tr.gov.gib.interaktiflogwatch.InteraktifLogWatchApplication"
+        attributes "Main-Class": "InteraktifLogWatchApplication"
     }
     enabled = true
     archiveClassifier = ''
