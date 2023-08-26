@@ -1,13 +1,11 @@
 
-create table evdbelge.parametreler
+create table parametreler
 (
     name  varchar(150) not null,
     value varchar(150)
 );
 
-
-
-create table evdbelge.belge
+create table belge
 (
     id              bigint generated always as identity
         constraint belge_pk
@@ -22,36 +20,36 @@ create table evdbelge.belge
     usernodeid      varchar(20) not null
 );
 
-create index belge_metadata_index
-    on evdbelge.belge using gin(metadata jsonb_path_ops);
+create index metadata_index
+    on belge using gin(metadata jsonb_path_ops);
 
-create unique index belge_oid_uindex
-    on evdbelge.belge (id);
+create unique index oid_uindex
+    on belge (id);
 
-create unique index belge_org_oid_belge_no_uindex
-    on evdbelge.belge (org_oid, belge_no);
+create unique index org_oid_belge_no_uindex
+    on ebelge (org_oid, belge_no);
 
-create index belge_usernodeid_index
-    on evdbelge.belge (usernodeid);
+create index usernodeid_index
+    on belge (usernodeid);
 
 
 
-create table evdbelge.belge_akis
+create table akis
 (
     id              bigint generated always as identity
-        constraint belge_akis_pk
+        constraint akis_pk
             primary key,
-    belge_id        bigint not null,
+    id        bigint not null,
     kullanici_kodu  varchar(30) not null,
     usernodeid      varchar(20) not null,
     aciklama        text,
     optime          timestamp default current_timestamp
 );
 
-create unique index belge_akis_oid_uindex
-    on evdbelge.belge_akis (id);
-create index belge_akis_belgeid_index
-    on evdbelge.belge_akis (belge_id);
+create unique index akis_oid_uindex
+    on akis (id);
+create index akis_belgeid_index
+    on akis (belge_id);
 
 
 
