@@ -1,0 +1,122 @@
+server:
+  port: ${HAZIRLAMA_SERVER_PORT}
+  servlet:
+    context-path: ${SVR_CONTEXT_PATH}
+
+spring:
+  task:
+    scheduling:
+      pool:
+        size: 2
+  rabbitmq:
+    host: rabbit-service
+    port: ${EVDBELGE_RBT_SERVICE_PORT}
+    username: ${EVDBELGE_RBT_USERNAME}
+    password: ${EVDBELGE_RBT_PASSWORD}
+    api:
+      url: ${RABBITMQ_API_QUEUE_URL}
+      token: ${RABBITMQ_API_TOKEN}
+    evdbelge:
+      exchange: ${EVDBELGE_RBT_EXCHANGE}
+      queue: ${EVDBELGE_RBT_QUEUE}
+      routingKey: ${EVDBELGE_RBT_ROUTINGKEY}
+  profiles:
+    active: ${ENVIRONMENT}
+
+api:
+  name: ${APP_NAME}
+  url: ${SERVICE_URL}
+  admin:
+    userName: ${ADMIN_USER_NAME}
+    password: ${ADMIN_PASSWORD}
+    role: ${ADMIN_ROLE}
+  evdbelge:
+    userName: ${EVDBELGE_USER_NAME}
+    password: ${EVDBELGE_PASSWORD}
+    role: ${EVDBELGE_ROLE}
+
+redis:
+  host: ${REDIS_SERVICE_HOST}
+  password: ${REDIS_SERVICE_PASSWORD}
+  port: ${REDIS_SERVICE_PORT}
+
+elastic:
+  apm:
+    enable: ${ELASTIC_APM_ENABLE}
+    service-name: ${POD_NAME:}
+    application-packages: ${ELASTIC_APM_APP_PACKAGE}
+    server-url: ${ELASTIC_APM_SERVICE_URL}
+    secret-token: ${ELASTIC_APM_SECRET_TOKEN}
+    verify-server-cert: ${ELASTIC_APM_VERIFY_SERVER_CERT}
+#
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        SQL: OFF
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE
+
+postgres:
+  evdbelge:
+    datasource:
+      driver-class: ${POSTGRES_DATABASE_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
+      jdbc: ${POSTGRES_EVDBELGE_DATABASE_URL}
+      username: ${POSTGRES_EVDBELGE_DATABASE_USERNAME}
+      password: ${POSTGRES_EVDBELGE_DATABASE_PASSWORD}
+      maximum-pool-size: ${POSTGRES_EVDBELGE_DATABASE_MAX_POOL_SIZE}
+      minimum-idle: ${POSTGRES_EVDBELGE_DATABASE_MIN_IDLE}
+      connectionTimeout: 30000
+      validationTimeout: 5000
+      maxLifetime: 1800000
+      hibernate:
+        dialect: ${POSTGRES_DATABASE_JPA_PROP_HIBERNATE_DIALECT:tr.gov.gib.evdbelge.evdbelgehazirlama.config.PostgresDialect}
+        show_sql: ${POSTGRES_DATABASE_SHOW_SQL}
+
+sybase:
+  sicil:
+    test:
+      datasource:
+        username: sa
+        password:
+        jdbc: jdbc:sybase:Tds:10.251.65.134:8000/SICIL
+  datasource:
+    hibernate:
+      validationTimeout: 5000
+      connectionTimeout: 30000
+      dialect: org.hibernate.dialect.SybaseASE15Dialect
+    driver-class: com.sybase.jdbc4.jdbc.SybDriver
+springdoc:
+  swagger-ui:
+    path: /api
+    operationsSorter: alpha
+    tagsSorter: alpha
+    docExpansion: none
+    url: /v3/api-docs
+
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      group:
+        custom:
+          include: diskSpace,ping,customCheck
+          show-components: always
+          show-details: always
+
+app:
+  podName: ${POD_NAME:log}
+  logPath: logs/${LOG_PATH}
+

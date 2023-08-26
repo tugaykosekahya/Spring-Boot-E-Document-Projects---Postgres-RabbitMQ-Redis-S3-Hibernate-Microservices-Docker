@@ -1,0 +1,6 @@
+FROM nexus-test:10441/alpine:jre17-20220714
+USER 502
+WORKDIR /home/gib/__WORKDIR__
+COPY build/libs/__JAR_NAME__-*.jar ./__JAR_NAME__.jar
+ENTRYPOINT exec java ${JAVA_OPTS} -jar __JAR_NAME__.jar
+EXPOSE 8080
