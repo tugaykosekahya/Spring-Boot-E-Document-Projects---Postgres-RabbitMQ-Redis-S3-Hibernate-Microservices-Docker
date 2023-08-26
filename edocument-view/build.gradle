@@ -5,7 +5,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'tr.gov.gib.evdbelge'
+group = ''
 sourceCompatibility = '17'
 
 configurations {
@@ -60,24 +60,9 @@ dependencies {
     implementation 'org.apache.xmlgraphics:batik-bridge:1.14'
     implementation 'org.codehaus.groovy:groovy-all:2.4.17'
     implementation 'org.apache.pdfbox:pdfbox:2.0.27'
-
     //rapor implementasyonları end
 
     implementation 'org.apache.commons:commons-text:1.9'
-
-    implementation 'tr.gov.gib.tahsilat:ths-base-controller:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-base-object:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-base-dao:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-base-service:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-exception:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-validator:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-external:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-utils:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-converter:1.1.1'
-    implementation 'tr.gov.gib.tahsilat:ths-logging:1.1.1'
-
-    implementation 'tr.gov.gib.gibos:gibosKubernetesServiceRemoteCall:0.0.8'
-
     implementation 'co.elastic.apm:apm-agent-api:1.33.0'
     implementation 'co.elastic.apm:apm-agent-attach:1.33.0'
 }
