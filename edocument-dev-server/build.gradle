@@ -89,14 +89,14 @@ task copyExplodedOther(type: Copy, dependsOn: 'explode') {
 }
 
 task undeploy (type: Delete) {
- 	delete deploymentDir + "/evdebelge-server"
-    delete deploymentDir + "/evdebelge-server.war.deployed"
-    delete deploymentDir + "/evdebelge-server.war.failed"
-    delete deploymentDir + "/evdebelge-server.war"
+ 	delete deploymentDir + "/"
+    delete deploymentDir + "/"
+    delete deploymentDir + "/"
+    delete deploymentDir + "/"
 }
 
 task reDeploy {
-    ext.deployFile = new File(deploymentDir + '/evdebelge-server.war.dodeploy')
+    ext.deployFile = new File(deploymentDir + '/.war.dodeploy')
     //outputs.file deployFile
 }
 reDeploy.doLast {
@@ -122,12 +122,12 @@ task startTomcat(type:Exec) {
 
 task makePretty(type: Delete) {
 
-        delete fileTree("${System.env.GR_TMCT_HM}" +'/webapps/evdebelge-server/WEB-INF/lib/') {
+        delete fileTree("${System.env.GR_TMCT_HM}" +'/webapps//WEB-INF/lib/') {
         include "${rootProject.name}"+'*.jar'
     }
 }
 task copyJarToBin(type: Copy) {
        dependsOn install
        from "${buildDir}/libs/${rootProject.name}-${version}.jar"
-       into "${System.env.GR_TMCT_HM}" +"/webapps/evdebelge-server/WEB-INF/lib/"
+       into "${System.env.GR_TMCT_HM}" +"/webapps//WEB-INF/lib/"
 }
