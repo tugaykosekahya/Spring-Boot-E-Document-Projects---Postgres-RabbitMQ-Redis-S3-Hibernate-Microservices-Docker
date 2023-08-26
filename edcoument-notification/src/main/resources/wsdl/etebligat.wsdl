@@ -1,0 +1,93 @@
+<definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://webservice.etebligat.vedop2014.gib.gov.tr/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://webservice.etebligat.vedop2014.gib.gov.tr/" name="EtebligatDelivererService">
+    <wsp:Policy wsu:Id="EtebligatDelivererPortBinding_MTOM_Policy-EtebligatDelivererPortBinding_MTOM_Policy">
+        <ns1:OptimizedMimeSerialization xmlns:ns1="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" wsp:Optional="true"/>
+    </wsp:Policy>
+    <types>
+        <xs:schema xmlns:tns="http://webservice.etebligat.vedop2014.gib.gov.tr/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://webservice.etebligat.vedop2014.gib.gov.tr/">
+            <xs:element name="TebligatEntry" type="tns:tebligatEntry"/>
+            <xs:element name="deliver" type="tns:deliver"/>
+            <xs:element name="deliverResponse" type="tns:deliverResponse"/>
+            <xs:element name="isDelivered" type="tns:isDelivered"/>
+            <xs:element name="isDeliveredResponse" type="tns:isDeliveredResponse"/>
+            <xs:complexType name="deliver">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:base64Binary" nillable="true" minOccurs="0"/>
+                    <xs:element name="arg1" type="tns:tebligatEntry" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="arg2" type="tns:tebligatEntry" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="tebligatEntry">
+                <xs:sequence>
+                    <xs:element name="key" type="xs:string" minOccurs="0"/>
+                    <xs:element name="value" type="xs:string" minOccurs="0"/>
+                    <xs:element name="turaciklama" type="xs:string" minOccurs="0"/>
+                    <xs:element name="ekdosyaadi" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="deliverResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="isDelivered">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="isDeliveredResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:base64Binary" nillable="true" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </types>
+    <message name="deliver">
+        <part name="parameters" element="tns:deliver"/>
+    </message>
+    <message name="deliverResponse">
+        <part name="parameters" element="tns:deliverResponse"/>
+    </message>
+    <message name="isDelivered">
+        <part name="parameters" element="tns:isDelivered"/>
+    </message>
+    <message name="isDeliveredResponse">
+        <part name="parameters" element="tns:isDeliveredResponse"/>
+    </message>
+    <portType name="EtebligatDeliverer">
+        <operation name="deliver">
+            <input wsam:Action="http://webservice.etebligat.vedop2014.gib.gov.tr/EtebligatDeliverer/deliverRequest" message="tns:deliver"/>
+            <output wsam:Action="http://webservice.etebligat.vedop2014.gib.gov.tr/EtebligatDeliverer/deliverResponse" message="tns:deliverResponse"/>
+        </operation>
+        <operation name="isDelivered">
+            <input wsam:Action="http://webservice.etebligat.vedop2014.gib.gov.tr/EtebligatDeliverer/isDeliveredRequest" message="tns:isDelivered"/>
+            <output wsam:Action="http://webservice.etebligat.vedop2014.gib.gov.tr/EtebligatDeliverer/isDeliveredResponse" message="tns:isDeliveredResponse"/>
+        </operation>
+    </portType>
+    <binding name="EtebligatDelivererPortBinding" type="tns:EtebligatDeliverer">
+        <wsp:PolicyReference URI="#EtebligatDelivererPortBinding_MTOM_Policy-EtebligatDelivererPortBinding_MTOM_Policy"/>
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="deliver">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+        <operation name="isDelivered">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+    <service name="EtebligatDelivererService">
+        <port name="EtebligatDelivererPort" binding="tns:EtebligatDelivererPortBinding">
+            <soap:address location="http://10.251.55.26:30778/ETebligatWS/EtebligatDeliverer"/>
+        </port>
+    </service>
+</definitions>
