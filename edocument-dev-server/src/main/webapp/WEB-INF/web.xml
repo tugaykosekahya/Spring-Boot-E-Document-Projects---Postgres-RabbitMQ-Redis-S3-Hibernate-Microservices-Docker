@@ -1,0 +1,61 @@
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+      version="3.0"> 
+    <servlet>
+        <servlet-name>PdfDownloader</servlet-name>
+        <servlet-class>tr.com.cs.server.jasper.servlet.EvdoRaporServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+ 
+
+    <servlet-mapping>
+        <servlet-name>PdfDownloader</servlet-name>
+        <url-pattern>/pdf/*</url-pattern>
+    </servlet-mapping>
+	
+	
+  <filter>
+    <filter-name>CORS</filter-name>
+    <filter-class>com.thetransactioncompany.cors.CORSFilter</filter-class>
+    <init-param>
+      <param-name>cors.allowGenericHttpRequests</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.allowOrigin</param-name>
+      <param-value>*</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.supportedMethods</param-name>
+      <param-value>GET, HEAD, POST, OPTIONS</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.supportedHeaders</param-name>
+      <param-value>Content-Type, X-Requested-With, Origin</param-value>
+    </init-param>
+    <init-param>
+      <param-name>cors.supportsCredentials</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter>
+    <filter-name>assos_filter</filter-name>
+    <filter-class>com.cs.assos.filter.servlet.AssosFilter</filter-class>
+  </filter>
+	<filter-mapping>
+    <filter-name>CORS</filter-name>
+			<url-pattern>/*</url-pattern>
+      <url-pattern>/dispatch</url-pattern>
+      <url-pattern>/assos-login</url-pattern>
+    <url-pattern>/fileUpload</url-pattern>
+    <url-pattern>/downloadResource</url-pattern>
+	<url-pattern>/pdf/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>assos_filter</filter-name>
+    <url-pattern>/dispatch</url-pattern>
+	<url-pattern>/pdf/*</url-pattern>
+  </filter-mapping>
+
+</web-app>

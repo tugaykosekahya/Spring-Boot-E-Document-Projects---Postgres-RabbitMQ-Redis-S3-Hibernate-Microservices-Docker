@@ -1,0 +1,23 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'java-library'
+apply plugin: 'distribution'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+group = 'tr.gov.gib.vedop.standalone.deploy'
+
+applicationDistribution.from("conf/") {
+	into "conf"
+}
+
+distTar{
+	jar.enabled = false
+    startScripts.onlyIf {false}
+}

@@ -1,0 +1,38 @@
+apply plugin: 'war'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+configurations.all {
+    resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+        if (details.requested.group == 'tr.gov.gib.vedop2014') {
+            details.useVersion 'latest.release'
+        }
+    }
+}
+  
+dependencies {
+    compile group: 'com.cs.side.refdata', name: 'side-refdata-api', version:'latest.release'
+    compile group: 'com.cs.side.refdata', name: 'side-refdata-jpa', version:'latest.release'
+}
+
+task px {
+doLast {
+    def File header = new File("src/main/resources/META-INF/persistence.header")
+    def File target = new File("src/main/resources/META-INF/persistence.xml")
+    def File footer = new File("src/main/resources/META-INF/persistence.footer")
+    target.text = header.getText()
+        configurations.runtime.resolvedConfiguration.getFirstLevelModuleDependencies().each { 
+            target << ("\t<jar-file>lib/" + it.getModuleName() + "-" 
+                + it.getModule().getId().getVersion() + ".jar</jar-file>\n")
+        }
+    target << footer.getText()
+}
+}
+
+
+processResources.dependsOn px
