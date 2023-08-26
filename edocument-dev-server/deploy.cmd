@@ -1,2 +1,2 @@
-set GR_TMCT_HM=C:\Users\engin\projeler\apache-tomcat-7.0.93-EVDEBELGE
+set GR_TMCT_HM=C:\apache-tomcat-7.0.93
 gradle clean undeploy deployExploded
