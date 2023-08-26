@@ -1,0 +1,106 @@
+server:
+  port: ${GORUNTULEME_SERVER_PORT}
+  servlet:
+    context-path: ${SVR_CONTEXT_PATH}
+
+spring:
+  profiles:
+    active: ${ENVIRONMENT}
+
+api:
+  name: ${APP_NAME}
+  url: ${SERVICE_URL}
+  admin:
+    userName: ${ADMIN_USER_NAME}
+    password: ${ADMIN_PASSWORD}
+    role: ${ADMIN_ROLE}
+  evdbelge:
+    userName: ${EVDBELGE_USER_NAME}
+    password: ${EVDBELGE_PASSWORD}
+    role: ${EVDBELGE_ROLE}
+
+redis:
+  host: ${REDIS_SERVICE_HOST}
+  password: ${REDIS_SERVICE_PASSWORD}
+  port: ${REDIS_SERVICE_PORT}
+
+tripledes:
+  key: ${TRIPLEDES_KEY}
+  iv: ${TRIPLEDES_IV}
+
+elastic:
+  apm:
+    enable: ${ELASTIC_APM_ENABLE}
+    service-name: ${POD_NAME:}
+    application-packages: ${ELASTIC_APM_APP_PACKAGE}
+    server-url: ${ELASTIC_APM_SERVICE_URL}
+    secret-token: ${ELASTIC_APM_SECRET_TOKEN}
+    verify-server-cert: ${ELASTIC_APM_VERIFY_SERVER_CERT}
+#
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        SQL: OFF
+#        type:
+#          descriptor:
+#            sql:
+#              BasicBinder: TRACE
+postgres:
+  evdbelge:
+    datasource:
+      driver-class: ${POSTGRES_DATABASE_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
+      jdbc: ${POSTGRES_EVDBELGE_DATABASE_URL}
+      username: ${POSTGRES_EVDBELGE_DATABASE_USERNAME}
+      password: ${POSTGRES_EVDBELGE_DATABASE_PASSWORD}
+      maximum-pool-size: 300
+      minimum-idle: 5
+      connectionTimeout: 30000
+      validationTimeout: 5000
+      maxLifetime: 1800000
+      hibernate:
+        dialect: ${POSTGRES_DATABASE_JPA_PROP_HIBERNATE_DIALECT:org.hibernate.dialect.PostgreSQLDialect}
+        show_sql: false
+
+objectstorage:
+  s3FileSeperator: ${S3_FILE_SEPERATOR}
+  s3FileExtention: ${S3_FILE_EXTENSION}
+  s3Endpoint: ${S3_ENDPOINT}
+  s3Namespace: ${S3_NAMESPACE}
+  s3AccessKey: ${S3_ACCESS_KEY}
+  s3SecretKey: ${S3_SECRET_KEY}
+  s3BucketNamePrefix: ${S3_BUCKET_NAME_PREFIX}
+
+
+springdoc:
+  swagger-ui:
+    path: /api
+    operationsSorter: alpha
+    tagsSorter: alpha
+    docExpansion: none
+    url: /v3/api-docs
+
+management:
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      group:
+        custom:
+          include: diskSpace,ping,customCheck
+          show-components: always
+          show-details: always
+
+app:
+  podName: ${POD_NAME:log}
+  logPath: logs/${LOG_PATH}
+
