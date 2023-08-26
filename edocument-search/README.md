@@ -37,7 +37,7 @@ entityleri (persistence object leri) dto ya cevirmek icin veya tam tersi.
 Ana proje versiyonu ile deploy projesi versiyonu aynı olmalıdır. Ana projede oluşan image o versiyona göre nexustan çekilir ve kubernetese deploy edilir.
 
 ----------------------------------------------------------------------------------------------
-örn: kubectl apply -f hazirlama-application-config-map.yaml --context=evdbelge-test
+örn: kubectl apply -f application-config-map.yaml --context=test
 
 config dosyaları deploy projesi altında güncel olmalıdır ve sistem ekibine de güncel halleri ayrıca gönderilir.
 
