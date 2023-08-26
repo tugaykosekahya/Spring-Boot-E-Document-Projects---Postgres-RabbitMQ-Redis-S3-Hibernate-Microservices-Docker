@@ -43,23 +43,6 @@ Local repository de jar oluşturmak için gradle tasklarındaki publishing -> pu
 
 Bootable jar çıkarılmak istenmiyorsa bootJar enabled=false , jar enabled=true yapılmalı
 
-Dependency leri içinde oluşması isteniyorsa:
-
-
-jar {
-
-    manifest {
-        attributes "Main-Class": "InteraktifLogWatchApplication"
-    }
-    enabled = true
-    archiveClassifier = ''
-    into("META-INF/maven/$project.group/$project.name") {
-        from { generatePomFileForMavenJavaPublication }
-        rename ".*", "pom.xml"
-    }
-}
-
-
 ----------------------------------------------------------------------------------------------
 
 Swagger:
