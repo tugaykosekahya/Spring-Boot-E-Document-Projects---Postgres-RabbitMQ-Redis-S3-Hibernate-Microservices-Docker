@@ -34,7 +34,7 @@ entityleri (persistence object leri) dto ya cevirmek icin veya tam tersi.
 
 ----------------------------------------------------------------------------------------------
 
-örn: kubectl apply -f hazirlama-application-config-map.yaml --context=test
+örn: kubectl apply -f application-config-map.yaml --context=test
 
 config dosyaları deploy projesi altında güncel olmalıdır ve sistem ekibine de güncel halleri ayrıca gönderilir.
 
@@ -48,9 +48,9 @@ Dependency leri içinde oluşması isteniyorsa:
 
 Swagger:
 
-http://localhost:8070/pdf-olusturma-server/swagger-ui/index.html#/
+http://localhost:8070/swagger-ui/index.html#/
 veya
-http://localhost:8070/pdf-olusturma-server/api
+http://localhost:8070/api
 
 TEST
 
