@@ -1,0 +1,72 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.2'
+    id 'io.spring.dependency-management' version '1.0.12.RELEASE'
+    id 'java'
+    id 'maven-publish'
+}
+
+group = 'tr.gov.gib.evdbelge'
+sourceCompatibility = '17'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+    all {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+        exclude group: 'org.slf4j', module: 'slf4j-simple'
+    }
+}
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact bootJar
+
+        }
+    }
+}
+bootJar {
+    enabled = true
+    archiveClassifier = ''
+}
+jar {
+    enabled = false
+}
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    //implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
+    implementation 'org.springdoc:springdoc-openapi-security:1.6.9'
+    implementation('org.mapstruct:mapstruct:1.5.3.Final')
+    compileOnly('org.mapstruct:mapstruct-processor:1.5.2.Final')
+    annotationProcessor('org.mapstruct:mapstruct-processor:1.5.2.Final')
+    runtimeOnly group: 'org.postgresql', name: 'postgresql', version: '42.5.0'
+    implementation 'tr.com.cs:S3Access:1.0.7'
+
+    implementation 'org.apache.commons:commons-text:1.9'
+
+    implementation 'tr.gov.gib.tahsilat:ths-base-controller:1.1.1'
+    implementation 'tr.gov.gib.tahsilat:ths-base-object:1.1.1'
+    implementation 'tr.gov.gib.tahsilat:ths-base-dao:1.1.1'
+    implementation 'tr.gov.gib.tahsilat:ths-base-service:1.1.1'
+    implementation 'tr.gov.gib.tahsilat:ths-exception:1.1.1'
+    implementation 'tr.gov.gib.tahsilat:ths-validator:1.1.1'
+    implementation 'tr.gov.gib.tahsilat:ths-external:1.1.1'
+    implementation 'tr.gov.gib.tahsilat:ths-utils:1.1.1'
+    implementation 'tr.gov.gib.tahsilat:ths-converter:1.1.1'
+    implementation 'tr.gov.gib.tahsilat:ths-logging:1.1.1'
+
+    implementation 'tr.gov.gib.gibos:gibosKubernetesServiceRemoteCall:0.0.8'
+
+    implementation 'co.elastic.apm:apm-agent-api:1.33.0'
+    implementation 'co.elastic.apm:apm-agent-attach:1.33.0'
+}
