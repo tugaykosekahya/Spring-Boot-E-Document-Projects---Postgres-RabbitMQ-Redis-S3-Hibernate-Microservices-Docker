@@ -34,21 +34,12 @@ entityleri (persistence object leri) dto ya cevirmek icin veya tam tersi.
 	
 --------------------------------------------------------------------------------------------
 
-http://git.gelbim.gov.tr/Deploy/evdbelge-deploy
-Deploylar buradan yapılır.
-
-http://git.gelbim.gov.tr/EVDB/evdbelge/evdbelge-aktarim
-
 Ana proje versiyonu ile deploy projesi versiyonu aynı olmalıdır. Ana projede oluşan image o versiyona göre nexustan çekilir ve kubernetese deploy edilir.
 
-
 ----------------------------------------------------------------------------------------------
-
-10.251.55.131 den evdb-runner kullanıcısıyla config yaml dosyaları deploy edilebilir.
 örn: kubectl apply -f hazirlama-application-config-map.yaml --context=evdbelge-test
 
 config dosyaları deploy projesi altında güncel olmalıdır ve sistem ekibine de güncel halleri ayrıca gönderilir.
-
 
 ----------------------------------------------------------------------------------------------
 
@@ -58,28 +49,13 @@ Bootable jar çıkarılmak istenmiyorsa bootJar enabled=false , jar enabled=true
 
 Dependency leri içinde oluşması isteniyorsa:
 
-
-jar {
-
-    manifest {
-        attributes "Main-Class": "tr.gov.gib.interaktiflogwatch.InteraktifLogWatchApplication"
-    }
-    enabled = true
-    archiveClassifier = ''
-    into("META-INF/maven/$project.group/$project.name") {
-        from { generatePomFileForMavenJavaPublication }
-        rename ".*", "pom.xml"
-    }
-}
-
-
 ----------------------------------------------------------------------------------------------
 
 Swagger:
 
-http://localhost:8072/sorgulama-server/swagger-ui/index.html#/
+http://localhost:8072/swagger-ui/index.html#/
 veya
-http://localhost:8072/sorgulama-server/api
+http://localhost:8072/api
 
 TEST
 
@@ -87,65 +63,9 @@ PROD
 
 ----------------------------------------------------------------------------------------------
 
-
-```text
-SORGULAMA_SERVER_PORT=8072;
-
-SVR_CONTEXT_PATH=/evdb/evdbelge/sorgulama-server;
-LOG_PATH=evdbelge-sorgulama;
-ENVIRONMENT=TEST;
-
-APP_NAME=sorgulama;
-
-LOG_HIBERNATE_SQL=trace;
-
-POSTGRES_EVDBELGE_DATABASE_URL=jdbc:postgresql://10.251.59.58:5432/evdbelge?currentSchema=evdbelge;
-POSTGRES_EVDBELGE_DATABASE_USERNAME=evdbelge_owner;
-POSTGRES_EVDBELGE_DATABASE_PASSWORD=eVdBelge12+3;
-POSTGRES_EVDBELGE_DATABASE_MAX_POOL_SIZE=30;
-POSTGRES_EVDBELGE_DATABASE_MIN_IDLE=5;
-POSTGRES_DATABASE_SHOW_SQL=true;
-
-ADMIN_USER_NAME=admin;
-ADMIN_PASSWORD=@dmiN123;
-ADMIN_ROLE=ADMIN;
-EVDBELGE_USER_NAME=evdbelge;
-EVDBELGE_PASSWORD=evdbelge123;
-EVDBELGE_ROLE=EVDBELGE;
-
-SERVICE_URL=http://localhost:8072/evdb/evdbelge/sorgulama-server;
-
-EVDBELGE_RBT_SERVICE_PORT=5672;
-EVDBELGE_RBT_USERNAME=test;
-EVDBELGE_RBT_PASSWORD=test_1234;
-EVDBELGE_RBT_EXCHANGE=evdbelge.exchange;
-EVDBELGE_RBT_PDF_QUEUE=evdbelgePdf;
-EVDBELGE_RBT_PDF_ROUTINGKEY=ebp.*;
-EVDBELGE_RBT_HEDEF_QUEUE=evdbelgeHedef;
-EVDBELGE_RBT_HEDEF_ROUTINGKEY=ebh.*;
-
-ELASTIC_APM_ENABLE=false;
-ELASTIC_APM_APP_PACKAGE=;
-ELASTIC_APM_SERVICE_URL=;
-ELASTIC_APM_SECRET_TOKEN=;
-ELASTIC_APM_VERIFY_SERVER_CERT=;
-
-REDIS_SERVICE_HOST=10.251.55.73;
-REDIS_SERVICE_PASSWORD=EVdBelge_ReD_123*;
-REDIS_SERVICE_PORT=32173;
-```
-
-
-----------------------------------------------------------------------------------------------
-
-
-Eğer localde hem gradle 7.3.3 hem de gradle 7.0 dan düşük versiyon kullanılacaksa --> C:\Users\CICEK_BERK\.gradle içindeki init.gradle kullanılmamalı.
-
 Gradle neredeyse onun içine init.gradle dosyası koyulur.
 
 C:\gradle-7.3.3\init.d
-
-
 7.3.3 için init.gradle
 
 ----------------------------------------------------------------------------------------------
@@ -158,7 +78,7 @@ apply plugin: 'maven-publish'
 		mavenLocal()
 		maven {
           name = 'standard-nexus-maven-public'
-          url = 'http://nexustest.gelbim.gov.tr:2081/repository/maven-public/'
+          url = ':2081/repository/maven-public/'
 		  allowInsecureProtocol = true
 		  credentials {
 			 username "developer"
@@ -186,7 +106,7 @@ settingsEvaluated { settings ->
     settings.pluginManagement {
         repositories {
             maven {
-                url 'http://nexustest.gelbim.gov.tr:2081/repository/maven-public/'
+                url ':2081/repository/maven-public/'
 				allowInsecureProtocol = true
 				credentials {
 				     username "developer"
